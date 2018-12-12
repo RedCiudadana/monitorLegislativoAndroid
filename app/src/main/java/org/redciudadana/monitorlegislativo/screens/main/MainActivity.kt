@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.screens.menu.MenuFragment
 
 class MainActivity : AppCompatActivity(), MainView {
 
@@ -51,9 +52,9 @@ class MainActivity : AppCompatActivity(), MainView {
     private fun setDrawerNavigationListener() {
         drawer_navigation.setNavigationItemSelectedListener {
             when (it.itemId) {
-//                R.id.option_candidates -> {
-//                    showCandidates()
-//                }
+                R.id.drawer_candidatos-> {
+                    showCandidates()
+                }
 //                R.id.option_commission -> {
 //                    showCommission()
 //                }
@@ -128,8 +129,24 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showMainMenu() {
-//        val fragment = MainMenuFragment()
-//        changeFragment(fragment, false);
+        val fragment = MenuFragment()
+        changeFragment(fragment, false);
+    }
+
+    override fun showCandidates() {
+        //TODO:
+    }
+
+    override fun showCongressData() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showRepresentant() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showNews() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showError(title: String, message: String) {
