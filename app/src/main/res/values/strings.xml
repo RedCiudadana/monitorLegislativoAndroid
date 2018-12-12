@@ -2,4 +2,12 @@
     <string name="app_name">Monitor Legislativo</string>
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
+    <string name="title_menu">Monitor legislativo</string>
+    
+    <!-- menu -->
+    <string name="menu_diputados">Diputados</string>
+    <string name="menu_representante">¿Quién me representa?</string>
+    <string name="menu_congreso_datos">Congreso en datos</string>
+    <string name="menu_noticias">Últimas noticias</string>
 </resources>
+
