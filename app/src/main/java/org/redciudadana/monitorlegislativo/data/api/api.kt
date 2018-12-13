@@ -17,32 +17,40 @@ private val retrofit = Retrofit.Builder()
 
 val api: IApi = retrofit.create(IApi::class.java)
 
-object Api {
-    var candidates: List<Profile>? = null
 
-    fun getProfiles(context: Context, callback: ((List<Profile>?, Throwable?) -> Unit)?) {
-        if (candidates != null) {
-            if (callback != null) callback(candidates, null)
-        } else {
-            val callResponse = api.getProfiles()
-            callResponse.enqueue(object: Callback<List<Profile>> {
-                override fun onFailure(call: Call<List<Profile>>, t: Throwable) {
-                    val stored = ModelStorage.getProfileListFromStorage(context)
-                    if (callback != null) {
-                        callback(stored, t)
-                    }
-                }
-
-                override fun onResponse(call: Call<List<Profile>>, response: Response<List<Profile>>) {
-                    val currentCandidates = response.body()
-                    if (currentCandidates != null) {
-                        ModelStorage.saveProfileListToStorage(context, currentCandidates)
-                    }
-                    if (callback != null) {
-                        callback(currentCandidates, null)
-                    }
-                }
-            })
+fun <T> apiCallGet(context: Context, getFromStorage: (Context) -> T?, setToStorage: (Context, T) -> Unit,
+                   apiCall: () -> Call<T>, callback: ((T?, Throwable?) -> Unit)?) {
+    val callResponse = apiCall()
+    callResponse.enqueue(object: Callback<T> {
+        override fun onFailure(call: Call<T>, t: Throwable) {
+            val persistedData = getFromStorage(context)
+            if (persistedData != null) {
+                if (callback != null) callback(persistedData, null)
+            } else {
+                if (callback != null) callback(null, t)
+            }
         }
-    }
+
+        override fun onResponse(call: Call<T>, response: Response<T>) {
+            val body = response.body()
+            if (body != null) {
+                setToStorage(context, body)
+            }
+            if (callback != null) {
+                callback(body, null)
+            }
+        }
+    })
+}
+
+
+object Api {
+
+    fun getProfiles(context: Context, callback: ((List<Profile>?, Throwable?) -> Unit)?) = apiCallGet(
+        context = context,
+        getFromStorage = ModelStorage::getProfileListFromStorage,
+        setToStorage = ModelStorage::saveProfileListToStorage,
+        apiCall = api::getProfiles,
+        callback = callback
+    )
 }

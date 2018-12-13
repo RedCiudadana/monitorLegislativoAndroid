@@ -3,11 +3,17 @@
     <string name="drawer_open">Abrir</string>
     <string name="drawer_close">Cerrar</string>
     <string name="title_menu">Monitor legislativo</string>
+    <string name="title_diputados">Diputados</string>
+
+    <string name="error_profiles">No se pudieron obtener los datos, intenta más tarde</string>
     
     <!-- menu -->
     <string name="menu_diputados">Diputados</string>
     <string name="menu_representante">¿Quién me representa?</string>
     <string name="menu_congreso_datos">Congreso en datos</string>
     <string name="menu_noticias">Últimas noticias</string>
+
+    <!-- lista diputados -->
+    <string name="diputados_image">Imagen de diputado</string>
 </resources>
 

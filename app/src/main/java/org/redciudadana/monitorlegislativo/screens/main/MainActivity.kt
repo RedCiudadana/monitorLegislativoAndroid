@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.screens.diputados.DiputadosFragment
 import org.redciudadana.monitorlegislativo.screens.menu.MenuFragment
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -130,11 +131,12 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun showMainMenu() {
         val fragment = MenuFragment()
-        changeFragment(fragment, false);
+        changeFragment(fragment, false)
     }
 
     override fun showCandidates() {
-        //TODO:
+        val fragment = DiputadosFragment()
+        changeFragment(fragment, true)
     }
 
     override fun showCongressData() {
