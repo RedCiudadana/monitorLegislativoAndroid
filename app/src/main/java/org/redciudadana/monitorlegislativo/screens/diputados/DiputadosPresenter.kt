@@ -22,7 +22,4 @@ class DiputadosPresenter: BasePresenter<DiputadosContract.View>(), DiputadosCont
         }
     }
 
-    override fun onCandidateSelected(profile: Profile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

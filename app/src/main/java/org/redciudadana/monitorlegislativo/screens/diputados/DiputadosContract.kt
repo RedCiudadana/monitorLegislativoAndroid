@@ -11,7 +11,5 @@ object DiputadosContract {
         fun onCandidateSelected(profile: Profile)
     }
 
-    interface Presenter: IPresenter<View> {
-        fun onCandidateSelected(profile: Profile)
-    }
+    interface Presenter: IPresenter<View>
 }

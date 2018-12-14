@@ -40,7 +40,7 @@ class DiputadosFragment: BaseFragment<DiputadosContract.View, DiputadosContract.
     }
 
     override fun onCandidateSelected(profile: Profile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mActivityView?.showDiputado(profile)
     }
 
 }

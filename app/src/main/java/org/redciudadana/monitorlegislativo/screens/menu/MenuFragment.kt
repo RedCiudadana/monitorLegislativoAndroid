@@ -22,7 +22,7 @@ class MenuFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = getString(R.string.title_menu)
         menu_item_diputados.setOnClickListener {
-            mainView.showCandidates()
+            mainView.showDiputados()
         }
 
         menu_item_mi_representante.setOnClickListener {

@@ -13,6 +13,8 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.data.models.Profile
+import org.redciudadana.monitorlegislativo.screens.diputado.DiputadoFragment
 import org.redciudadana.monitorlegislativo.screens.diputados.DiputadosFragment
 import org.redciudadana.monitorlegislativo.screens.menu.MenuFragment
 
@@ -54,7 +56,7 @@ class MainActivity : AppCompatActivity(), MainView {
         drawer_navigation.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.drawer_candidatos-> {
-                    showCandidates()
+                    showDiputados()
                 }
 //                R.id.option_commission -> {
 //                    showCommission()
@@ -134,8 +136,16 @@ class MainActivity : AppCompatActivity(), MainView {
         changeFragment(fragment, false)
     }
 
-    override fun showCandidates() {
+    override fun showDiputados() {
         val fragment = DiputadosFragment()
+        changeFragment(fragment, true)
+    }
+
+    override fun showDiputado(profile: Profile) {
+        val fragment = DiputadoFragment()
+        val arguments = Bundle()
+        arguments.putParcelable(MainView.ARG_DIPUTADO, profile)
+        fragment.arguments = arguments
         changeFragment(fragment, true)
     }
 
