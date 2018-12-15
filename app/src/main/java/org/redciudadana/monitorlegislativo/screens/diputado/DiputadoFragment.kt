@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_diputado.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
@@ -12,6 +11,7 @@ import org.redciudadana.monitorlegislativo.screens.main.MainView
 import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
 import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
 import org.redciudadana.monitorlegislativo.utils.mvp.BaseFragment
+import org.redciudadana.monitorlegislativo.utils.openUrl
 
 class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Presenter, MainView>(), DiputadoContract.View {
 
@@ -45,7 +45,26 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
         diputado_name.text = profile.nombre
         diputado_department.text = profile.distrito
+        button_facebook.setOnClickListener(openUrlOnClick(null))
+        button_twitter.setOnClickListener(openUrlOnClick(buildTwitterUrl(profile.tw)))
+        button_call.setOnClickListener(openUrlOnClick(String.format("tel:%s", profile.telefono)))
 
+    }
+
+    private fun openUrlOnClick(string: String?): (View) -> Unit {
+        return {
+            if (string == null) {
+                mActivityView?.showError("Información no disponible", "")
+            }
+            openUrl(context, string)
+        }
+    }
+
+    private fun buildTwitterUrl(twitterAccount: String?): String? {
+        if (twitterAccount != null && !twitterAccount.isEmpty()) {
+            return String.format("https://twitter.com/%s", twitterAccount)
+        }
+        return null
     }
 
 }

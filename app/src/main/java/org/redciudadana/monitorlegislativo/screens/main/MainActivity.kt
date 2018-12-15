@@ -162,10 +162,11 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showError(title: String, message: String) {
-        AlertDialog.Builder(this, R.style.Base_ThemeOverlay_AppCompat_Dialog_Alert)
+        AlertDialog.Builder(this, R.style.AlertDialogTheme)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("Aceptar") { _, _ -> }
+            .setNegativeButton("Cancelar") { _, _ -> }
             .show()
 
     }

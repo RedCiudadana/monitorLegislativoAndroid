@@ -1,13 +1,13 @@
 package org.redciudadana.monitorlegislativo.screens.splash
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import org.redciudadana.monitorlegislativo.screens.main.MainActivity
+import android.support.v7.app.AppCompatActivity
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.screens.main.MainActivity
 
-class SplashActivity: Activity() {
+class SplashActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
