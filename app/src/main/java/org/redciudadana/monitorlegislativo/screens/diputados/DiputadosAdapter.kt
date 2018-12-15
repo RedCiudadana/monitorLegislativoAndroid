@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_diputados_item.view.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
@@ -52,7 +52,7 @@ class DiputadosAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val candidate = diputados?.get(position)
         if (candidate != null) {
-            Picasso.with(context).load(candidate.fotoUrl).into(holder.candidateImage)
+            Glide.with(context).load(candidate.fotoUrl).into(holder.candidateImage)
             holder.candidateText.text = candidate.nombre
             holder.candidatePartido.text = candidate.partidoactual
             holder.onClickListener = View.OnClickListener {

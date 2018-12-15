@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_diputado.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.main.MainView
+import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
+import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
 import org.redciudadana.monitorlegislativo.utils.mvp.BaseFragment
-import org.redciudadana.monitorlegislativo.utils.picasso.RoundCornerTransformation
 
 class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Presenter, MainView>(), DiputadoContract.View {
 
@@ -32,14 +33,13 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
     override fun showProfile() {
         val profile = getProfile()
 
-        val roundTransformation = RoundCornerTransformation(context!!.resources)
-        Picasso
-            .with(context)
+        GlideApp
+            .with(context!!)
             .load(profile.fotoUrl)
-            .transform(roundTransformation)
+            .transform(RoundCornerTransformation(context!!.resources))
             .into(diputado_face_image)
-        Picasso
-            .with(context)
+        GlideApp
+            .with(context!!)
             .load(profile.fotoUrlPartido)
             .into(diputado_partido_image)
 
