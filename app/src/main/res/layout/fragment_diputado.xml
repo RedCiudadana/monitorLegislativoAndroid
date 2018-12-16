@@ -1,129 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/diputado_overview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:background="#eaeef1"
-        android:gravity="center"
-        android:orientation="horizontal">
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <FrameLayout
-                android:background="@drawable/rounded_shape_white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:id="@+id/diputado_face_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"/>
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_shape_white"
-                android:layout_gravity="right|bottom"
-                android:padding="3dp">
-                <ImageView
-                    android:id="@+id/diputado_partido_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"/>
-            </FrameLayout>
-
-        </FrameLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp">
-            <TextView
-                android:id="@+id/diputado_name"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="#eaeef1"
+            android:gravity="center"
+            android:orientation="horizontal">
+            <FrameLayout
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:background="@drawable/rounded_shape_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_margin="10dp">
+                    <ImageView
+                        android:id="@+id/diputado_face_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_shape_white"
+                    android:layout_gravity="right|bottom"
+                    android:padding="3dp">
+                    <ImageView
+                        android:id="@+id/diputado_partido_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </FrameLayout>
+
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="#3c474c"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#fff"
-                app:elevation="3dp"
-                app:cardUseCompatPadding="true"
-                android:layout_marginTop="10dp">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp">
                 <TextView
-                    android:id="@+id/diputado_department"
+                    android:id="@+id/diputado_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#3c474c"
-                    android:layout_margin="5dp"/>
-            </androidx.cardview.widget.CardView>
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="#fff"
+                    app:elevation="3dp"
+                    app:cardUseCompatPadding="true"
+                    android:layout_marginTop="10dp">
+                    <TextView
+                        android:id="@+id/diputado_department"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#3c474c"
+                        android:layout_margin="5dp"/>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#fff"
+            android:padding="20dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_facebook"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                app:icon="@drawable/button_fb"
+                app:iconPadding="0dp"
+                android:padding="5dp"
+                app:iconGravity="textStart"
+                app:iconSize="@dimen/diputado_icon_size"
+                app:cornerRadius="10dp"
+                app:backgroundTint="#2c4371" />
+            <Space
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_twitter"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                app:icon="@drawable/button_tw"
+                app:iconPadding="0dp"
+                android:padding="5dp"
+                app:iconGravity="textStart"
+                app:iconSize="@dimen/diputado_icon_size"
+                app:cornerRadius="10dp"
+                app:backgroundTint="#29abe2" />
+            <Space
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_call"
+                style="@style/Widget.MaterialComponents.Button.Icon"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                app:icon="@drawable/phone_icon"
+                app:iconPadding="5dp"
+                app:iconSize="@dimen/diputado_icon_size"
+                app:iconTint="#fff"
+                android:textColor="#fff"
+                app:cornerRadius="10dp"
+                app:backgroundTint="#112f5f"
+                android:text="Llamar"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/diputado_information_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <View android:id="@+id/touch_interceptor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#eaeef1"
+        android:visibility="invisible">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#26a5dc">
+            <TextView
+                android:textColor="#fff"
+                android:text="Información general"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/diputado_show_overview"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                app:backgroundTint="#26a5dc"
+                app:icon="@drawable/arrow_down"
+                app:iconGravity="textStart"
+                app:iconSize="@dimen/diputado_icon_size" />
 
         </LinearLayout>
+        <FrameLayout
+            android:id="@+id/details_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
     </LinearLayout>
-    <LinearLayout
+
+    <com.alexvasilkov.foldablelayout.UnfoldableView
+        android:id="@+id/unfoldable_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#fff"
-        android:padding="20dp">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_facebook"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="50dp"
-            android:layout_height="70dp"
-            app:icon="@drawable/button_fb"
-            app:iconPadding="0dp"
-            android:padding="5dp"
-            app:iconGravity="textStart"
-            app:iconSize="@dimen/diputado_icon_size"
-            app:cornerRadius="10dp"
-            app:backgroundTint="#2c4371" />
-        <Space
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_twitter"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="50dp"
-            android:layout_height="70dp"
-            app:icon="@drawable/button_tw"
-            app:iconPadding="0dp"
-            android:padding="5dp"
-            app:iconGravity="textStart"
-            app:iconSize="@dimen/diputado_icon_size"
-            app:cornerRadius="10dp"
-            app:backgroundTint="#29abe2" />
-        <Space
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_call"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            app:icon="@drawable/phone_icon"
-            app:iconPadding="5dp"
-            app:iconSize="@dimen/diputado_icon_size"
-            app:iconTint="#fff"
-            android:textColor="#fff"
-            app:cornerRadius="10dp"
-            app:backgroundTint="#112f5f"
-            android:text="Llamar"/>
-    </LinearLayout>
-
-</LinearLayout>
+        android:layout_height="match_parent" />
+</FrameLayout>

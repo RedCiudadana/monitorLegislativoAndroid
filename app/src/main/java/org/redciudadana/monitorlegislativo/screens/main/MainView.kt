@@ -10,6 +10,7 @@ interface MainView : ActivityView {
     fun showRepresentant()
     fun showCongressData()
     fun showNews()
+    fun setOnBackListener(listener: () -> Boolean)
 
     companion object {
         const val ARG_DIPUTADO = "diputado"

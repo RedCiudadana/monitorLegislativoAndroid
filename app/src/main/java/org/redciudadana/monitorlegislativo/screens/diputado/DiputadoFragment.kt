@@ -3,22 +3,23 @@ package org.redciudadana.monitorlegislativo.screens.diputado
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import com.alexvasilkov.foldablelayout.UnfoldableView
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_diputado.*
+import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.main.MainView
 import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
 import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
 import org.redciudadana.monitorlegislativo.utils.mvp.BaseFragment
-import org.redciudadana.monitorlegislativo.utils.openUrl
-import java.util.regex.Pattern
 
 class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Presenter, MainView>(), DiputadoContract.View {
 
     override var mPresenter: DiputadoContract.Presenter = DiputadoPresenter()
-
-    val numberRegex = Regex("""(\d+)""")
 
     override fun setTitle() {
         mActivityView?.setTitle("Diputado")
@@ -28,14 +29,49 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         return inflater.inflate(R.layout.fragment_diputado, container, false)
     }
 
-    private fun getProfile(): Profile {
-        return arguments?.getParcelable(MainView.ARG_DIPUTADO) as Profile
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        diputado_information_list.adapter = DiputadoOptionsAdapter(this)
+        initUnfoldable()
     }
 
+    private fun initUnfoldable() {
+        touch_interceptor.isClickable = false
+        details_layout.visibility = INVISIBLE
+        unfoldable_view.setOnFoldingListener(object : UnfoldableView.SimpleFoldingListener() {
+            override fun onUnfolding(unfoldableView: UnfoldableView?) {
+                touch_interceptor.isClickable = true
+                details_layout.visibility = VISIBLE
+            }
 
-    override fun showProfile() {
-        val profile = getProfile()
+            override fun onUnfolded(unfoldableView: UnfoldableView?) {
+                touch_interceptor.isClickable = false
+            }
 
+            override fun onFoldingBack(unfoldableView: UnfoldableView?) {
+                touch_interceptor.isClickable = true
+            }
+
+            override fun onFoldedBack(unfoldableView: UnfoldableView?) {
+                touch_interceptor.isClickable = false
+                details_layout.visibility = INVISIBLE
+            }
+        })
+        mActivityView?.setOnBackListener(this::onBackPressed)
+        diputado_show_overview.setOnClickListener {
+            unfoldable_view.foldBack()
+        }
+    }
+
+    private fun onBackPressed(): Boolean {
+        if (unfoldable_view.isUnfolded || unfoldable_view.isUnfolding) {
+            unfoldable_view.foldBack()
+            return true
+        }
+        return false
+    }
+
+    override fun showProfile(profile: Profile) {
         GlideApp
             .with(context!!)
             .load(profile.fotoUrl)
@@ -48,37 +84,43 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
         diputado_name.text = profile.nombre
         diputado_department.text = profile.distrito
-        button_facebook.setOnClickListener(openUrlOnClick(profile.fb))
-        button_twitter.setOnClickListener(openUrlOnClick(buildTwitterUrl(profile.tw)))
-        button_call.setOnClickListener(openUrlOnClick(getPhoneNumberUrl(profile.telefono)))
-
+        button_facebook.setOnClickListener { mPresenter.onFacebookPress() }
+        button_twitter.setOnClickListener { mPresenter.onTwitterPress() }
+        button_call.setOnClickListener { mPresenter.onPhonePress() }
     }
 
-    private fun openUrlOnClick(string: String?): (View) -> Unit {
-        return {
-            if (string == null) {
-                mActivityView?.showError("Información no disponible", "")
-            }
-            openUrl(context, string)
-        }
+    override fun onOptionPress(view: View, position: Int?) {
+        mPresenter.onOptionPress(view, position)
     }
 
-    private fun buildTwitterUrl(twitterAccount: String?): String? {
-        if (twitterAccount != null && !twitterAccount.isEmpty()) {
-            return String.format("https://twitter.com/%s", twitterAccount)
-        }
-        return null
+
+    override fun showGeneralInformation(view: View, profile: Profile) {
+        inflateIntoDetails(R.layout.fragment_diputado_general_info)
+        clearFindViewByIdCache()
+        diputado_general_info_text.text = profile.historialpolitico
+        unfoldDetails(view)
     }
 
-    fun getPhoneNumberUrl(rawData: String?): String? {
-        if (rawData != null) {
-            val result = numberRegex.find(rawData)
-            if (result != null) {
-                return String.format("tel:%s", result.value)
-            }
-        }
-
-        return null
+    override fun showHistory(view: View, profile: Profile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun showAssistance(view: View, profile: Profile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showVotes(view: View, profile: Profile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun inflateIntoDetails(layout: Int) {
+        details_content.removeAllViews()
+        LayoutInflater.from(context).inflate(layout, details_content, true)
+    }
+
+    private fun unfoldDetails(view: View) {
+        unfoldable_view.unfold(view, details_layout)
+    }
+
 
 }

@@ -17,12 +17,14 @@ import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.diputado.DiputadoFragment
 import org.redciudadana.monitorlegislativo.screens.diputados.DiputadosFragment
 import org.redciudadana.monitorlegislativo.screens.menu.MenuFragment
+import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), MainView {
 
 
     private var mDrawerToggle: ActionBarDrawerToggle? = null
     private var firstAnimation = true
+    private var onBackListener =  WeakReference<() -> Boolean>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,5 +171,15 @@ class MainActivity : AppCompatActivity(), MainView {
             .setNegativeButton("Cancelar") { _, _ -> }
             .show()
 
+    }
+
+    override fun setOnBackListener(listener: () -> Boolean) {
+        onBackListener = WeakReference(listener)
+    }
+
+    override fun onBackPressed() {
+        if (onBackListener.get()?.invoke() != true) {
+            super.onBackPressed()
+        }
     }
 }
