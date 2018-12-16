@@ -2,7 +2,7 @@ package org.redciudadana.monitorlegislativo.utils.mvp
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.View
 import org.redciudadana.monitorlegislativo.utils.views.ActivityView
 
@@ -15,7 +15,7 @@ abstract class BaseFragment<in V : IView, T : IPresenter<V>, A: ActivityView> : 
     protected var mActivityView: A? = null
 
     @Suppress("UNCHECKED_CAST")
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is ActivityView) {
             mActivityView = context as A

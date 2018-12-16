@@ -1,8 +1,8 @@
 package org.redciudadana.monitorlegislativo.screens.diputados
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +26,12 @@ class DiputadosFragment: BaseFragment<DiputadosContract.View, DiputadosContract.
         mAdapter = DiputadosAdapter(context!!, this, null)
         diputados_list.setHasFixedSize(true)
         diputados_list.layoutManager = mLayoutManager
-        diputados_list.addItemDecoration(DividerItemDecoration(context, mLayoutManager.orientation))
+        diputados_list.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                mLayoutManager.orientation
+            )
+        )
         diputados_list.adapter = mAdapter
         super.onViewCreated(view, savedInstanceState)
     }

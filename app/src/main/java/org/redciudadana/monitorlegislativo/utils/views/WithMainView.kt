@@ -1,7 +1,7 @@
 package org.redciudadana.monitorlegislativo.utils.views
 
 import android.app.Activity
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 /**
  * Created by javier on 1/24/18.

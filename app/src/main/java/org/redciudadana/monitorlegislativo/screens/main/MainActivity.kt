@@ -1,13 +1,13 @@
 package org.redciudadana.monitorlegislativo.screens.main
 
 import android.content.res.Configuration
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.annotation.StringRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AlertDialog
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), MainView {
         mDrawerToggle?.syncState()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         mDrawerToggle?.onConfigurationChanged(newConfig)
     }
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showError(title: String, message: String) {
-        AlertDialog.Builder(this, R.style.AlertDialogTheme)
+        AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("Aceptar") { _, _ -> }

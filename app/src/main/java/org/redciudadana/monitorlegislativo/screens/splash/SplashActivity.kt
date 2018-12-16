@@ -3,7 +3,7 @@ package org.redciudadana.monitorlegislativo.screens.splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.screens.main.MainActivity
 

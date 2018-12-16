@@ -12,10 +12,13 @@ import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
 import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
 import org.redciudadana.monitorlegislativo.utils.mvp.BaseFragment
 import org.redciudadana.monitorlegislativo.utils.openUrl
+import java.util.regex.Pattern
 
 class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Presenter, MainView>(), DiputadoContract.View {
 
     override var mPresenter: DiputadoContract.Presenter = DiputadoPresenter()
+
+    val numberRegex = Regex("""(\d+)""")
 
     override fun setTitle() {
         mActivityView?.setTitle("Diputado")
@@ -45,9 +48,9 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
         diputado_name.text = profile.nombre
         diputado_department.text = profile.distrito
-        button_facebook.setOnClickListener(openUrlOnClick(null))
+        button_facebook.setOnClickListener(openUrlOnClick(profile.fb))
         button_twitter.setOnClickListener(openUrlOnClick(buildTwitterUrl(profile.tw)))
-        button_call.setOnClickListener(openUrlOnClick(String.format("tel:%s", profile.telefono)))
+        button_call.setOnClickListener(openUrlOnClick(getPhoneNumberUrl(profile.telefono)))
 
     }
 
@@ -64,6 +67,17 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         if (twitterAccount != null && !twitterAccount.isEmpty()) {
             return String.format("https://twitter.com/%s", twitterAccount)
         }
+        return null
+    }
+
+    fun getPhoneNumberUrl(rawData: String?): String? {
+        if (rawData != null) {
+            val result = numberRegex.find(rawData)
+            if (result != null) {
+                return String.format("tel:%s", result.value)
+            }
+        }
+
         return null
     }
 

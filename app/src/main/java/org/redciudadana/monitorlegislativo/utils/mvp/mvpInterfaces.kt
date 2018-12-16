@@ -2,7 +2,7 @@ package org.redciudadana.monitorlegislativo.utils.mvp
 
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 /**
  * Created by javier on 1/23/18.
