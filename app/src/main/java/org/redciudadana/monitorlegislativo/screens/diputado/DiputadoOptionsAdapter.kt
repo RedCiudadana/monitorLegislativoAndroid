@@ -9,6 +9,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_diputado_option.view.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.screens.diputado.DiputadoContract.options
+import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
 
 class ViewHolder(val view: View) {
     val image: ImageView
@@ -25,10 +26,22 @@ class ViewHolder(val view: View) {
 
 class DiputadoOptionsAdapter(val diputadoView: DiputadoContract.View): ArrayAdapter<String>(diputadoView.getContext()!!, 0, options) {
 
+    val images = arrayListOf(
+        R.drawable.icon_document_black,
+        R.drawable.icon_history_black,
+        R.drawable.icon_people_black,
+        R.drawable.icon_check_black
+    )
+
+
     override fun getView(position: Int, viewParam: View?, parent: ViewGroup?): View {
         val view = viewParam ?: LayoutInflater.from(diputadoView.getContext()).inflate(R.layout.fragment_diputado_option, parent, false)
         val holder = ViewHolder(view)
         holder.text.text = DiputadoContract.options[position]
+        GlideApp
+            .with(diputadoView.getContext()!!)
+            .load(images[position])
+            .into(holder.image)
         holder.setOnClickListener {
             diputadoView.onOptionPress(holder.container, position)
         }

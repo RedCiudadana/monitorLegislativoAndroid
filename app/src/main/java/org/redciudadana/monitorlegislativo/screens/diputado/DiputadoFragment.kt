@@ -7,6 +7,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.alexvasilkov.foldablelayout.UnfoldableView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_diputado.*
 import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
@@ -96,6 +97,11 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
     override fun showGeneralInformation(view: View, profile: Profile) {
         inflateIntoDetails(R.layout.fragment_diputado_general_info)
+        details_title.text = "Información general"
+        GlideApp
+            .with(context!!)
+            .load(R.drawable.icon_document_white)
+            .into(details_title_icon)
         clearFindViewByIdCache()
         diputado_general_info_text.text = profile.historialpolitico
         unfoldDetails(view)
