@@ -48,5 +48,7 @@
         app:theme="@style/ThemeOverlay.AppCompat"
         app:itemBackground="@color/colorPrimaryDark"
         app:itemTextColor="@color/drawer_menu_text"
+        app:itemIconTint="#fff"
+        app:itemIconSize="@dimen/diputado_icon_size"
         app:menu="@menu/drawer_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>

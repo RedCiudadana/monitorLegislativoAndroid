@@ -1,6 +1,9 @@
 package org.redciudadana.monitorlegislativo.screens.diputado
 
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -11,6 +14,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_diputado.*
 import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
+import kotlinx.android.synthetic.main.fragment_diputado_history.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.main.MainView
@@ -73,16 +77,17 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
     }
 
     override fun showProfile(profile: Profile) {
-        GlideApp
-            .with(context!!)
-            .load(profile.fotoUrl)
-            .transform(RoundCornerTransformation(context!!.resources))
-            .into(diputado_face_image)
-        GlideApp
-            .with(context!!)
-            .load(profile.fotoUrlPartido)
-            .into(diputado_partido_image)
-
+        context?.let {
+            GlideApp
+                .with(it)
+                .load(profile.fotoUrl)
+                .transform(RoundCornerTransformation(it.resources))
+                .into(diputado_face_image)
+            GlideApp
+                .with(it)
+                .load(profile.fotoUrlPartido)
+                .into(diputado_partido_image)
+        }
         diputado_name.text = profile.nombre
         diputado_department.text = profile.distrito
         button_facebook.setOnClickListener { mPresenter.onFacebookPress() }
@@ -96,19 +101,19 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
 
     override fun showGeneralInformation(view: View, profile: Profile) {
-        inflateIntoDetails(R.layout.fragment_diputado_general_info)
-        details_title.text = "Información general"
-        GlideApp
-            .with(context!!)
-            .load(R.drawable.icon_document_white)
-            .into(details_title_icon)
-        clearFindViewByIdCache()
-        diputado_general_info_text.text = profile.historialpolitico
+        inflateIntoDetails(R.layout.fragment_diputado_general_info, "Información general", R.drawable.icon_document_white)
+        val parsedText = fromHtml(profile.biografia)
+        diputado_general_info_text.text = parsedText
         unfoldDetails(view)
     }
 
     override fun showHistory(view: View, profile: Profile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        inflateIntoDetails(R.layout.fragment_diputado_history, "Historial político", R.drawable.icon_history_white)
+        diputado_status.text = profile.estado ?: "N/A"
+        diputado_age.text = profile.edad ?: "N/A"
+        diputado_professional_years.text = profile.anosprofesional ?: "N/A"
+        diputado_college_number.text = profile.colegiado ?: "N/A"
+        unfoldDetails(view)
     }
 
     override fun showAssistance(view: View, profile: Profile) {
@@ -119,14 +124,31 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun inflateIntoDetails(layout: Int) {
+    private fun inflateIntoDetails(layout: Int, title: String, icon: Int) {
         details_content.removeAllViews()
         LayoutInflater.from(context).inflate(layout, details_content, true)
+        details_title.text = title
+        context?.let {
+            GlideApp
+                .with(it)
+                .load(icon)
+                .into(details_title_icon)
+        }
+        clearFindViewByIdCache()
     }
 
     private fun unfoldDetails(view: View) {
         unfoldable_view.unfold(view, details_layout)
     }
 
+
+    private fun fromHtml(text: String?): CharSequence? {
+        if (text == null) return "Información no disponible"
+        return if (Build.VERSION.SDK_INT < 24) {
+            Html.fromHtml(text)
+        } else {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        }
+    }
 
 }

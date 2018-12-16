@@ -12,4 +12,21 @@
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
+
+    <style name="Diputado" />
+    <style name="Diputado.HistoryRow">
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+    <style name="Diputado.HistoryTitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+    <style name="Diputado.HistoryData">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

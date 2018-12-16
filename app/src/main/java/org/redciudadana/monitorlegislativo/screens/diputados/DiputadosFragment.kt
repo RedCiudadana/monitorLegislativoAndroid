@@ -21,9 +21,9 @@ class DiputadosFragment: BaseFragment<DiputadosContract.View, DiputadosContract.
         return inflater.inflate(R.layout.fragment_diputados, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun initCandidatesList(list: List<Profile>?) {
         val mLayoutManager = LinearLayoutManager(context)
-        mAdapter = DiputadosAdapter(context!!, this, null)
+        mAdapter = DiputadosAdapter(context!!, this, list)
         diputados_list.setHasFixedSize(true)
         diputados_list.layoutManager = mLayoutManager
         diputados_list.addItemDecoration(
@@ -33,7 +33,6 @@ class DiputadosFragment: BaseFragment<DiputadosContract.View, DiputadosContract.
             )
         )
         diputados_list.adapter = mAdapter
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun setTitle() {

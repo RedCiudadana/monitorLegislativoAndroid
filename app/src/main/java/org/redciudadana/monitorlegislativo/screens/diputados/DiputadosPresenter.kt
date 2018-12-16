@@ -9,17 +9,23 @@ class DiputadosPresenter: BasePresenter<DiputadosContract.View>(), DiputadosCont
     override fun onViewCreated() {
         mView?.setTitle()
         mView?.showLoading()
-        Api.getProfiles(mView!!.getContext()!!) { profileList, throwable ->
-            if (throwable != null) {
-                val profiles = mView?.getContext()?.getString(R.string.error_profiles)
-                if (profiles != null) {
-                    mView?.showError(profiles)
+        var cachedProfiles: List<Profile>? = null
+        mView?.getContext()?.let {
+            cachedProfiles = Api.getCachedProfiles(it)
+            Api.getProfiles(it) { profileList, throwable ->
+                if (throwable != null) {
+                    val profiles = mView?.getContext()?.getString(R.string.error_profiles)
+                    if (profiles != null) {
+                        mView?.showError(profiles)
+                    }
+                } else if (profileList != null){
+                    mView?.showCandidatesList(profileList)
                 }
-            } else if (profileList != null){
-                mView?.showCandidatesList(profileList)
+                mView?.hideLoading()
             }
-            mView?.hideLoading()
         }
+        mView?.initCandidatesList(cachedProfiles)
+
     }
 
 }

@@ -46,6 +46,10 @@ fun <T> apiCallGet(context: Context, getFromStorage: (Context) -> T?, setToStora
 
 object Api {
 
+    fun getCachedProfiles(context: Context): List<Profile>? {
+        return ModelStorage.getProfileListFromStorage(context)
+    }
+
     fun getProfiles(context: Context, callback: ((List<Profile>?, Throwable?) -> Unit)?) = apiCallGet(
         context = context,
         getFromStorage = ModelStorage::getProfileListFromStorage,

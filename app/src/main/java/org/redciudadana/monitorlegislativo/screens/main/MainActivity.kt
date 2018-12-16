@@ -1,16 +1,16 @@
 package org.redciudadana.monitorlegislativo.screens.main
 
 import android.content.res.Configuration
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
     private var mDrawerToggle: ActionBarDrawerToggle? = null
     private var firstAnimation = true
-    private var onBackListener =  WeakReference<() -> Boolean>(null)
+    private var onBackListener: (() -> Boolean)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (mDrawerToggle?.onOptionsItemSelected(item)!!) {
+        if (mDrawerToggle?.onOptionsItemSelected(item) == true) {
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity(), MainView {
             transaction.addToBackStack(null)
         }
         transaction.commitAllowingStateLoss()
-        drawer_layout.closeDrawer(Gravity.START)
+        drawer_layout.closeDrawer(GravityCompat.START)
 
     }
 
@@ -174,11 +174,11 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun setOnBackListener(listener: () -> Boolean) {
-        onBackListener = WeakReference(listener)
+        onBackListener = listener
     }
 
     override fun onBackPressed() {
-        if (onBackListener.get()?.invoke() != true) {
+        if (onBackListener?.invoke() != true) {
             super.onBackPressed()
         }
     }
