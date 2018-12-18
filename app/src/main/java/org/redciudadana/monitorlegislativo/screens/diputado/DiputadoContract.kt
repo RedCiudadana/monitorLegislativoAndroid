@@ -1,6 +1,6 @@
 package org.redciudadana.monitorlegislativo.screens.diputado
 
-import android.view.View
+import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.utils.mvp.IPresenter
 import org.redciudadana.monitorlegislativo.utils.mvp.IView
@@ -12,8 +12,10 @@ object DiputadoContract {
         fun showProfile(profile: Profile)
         fun onOptionPress(view: android.view.View, position: Int?)
         fun showGeneralInformation(view: android.view.View, profile: Profile)
-        fun showHistory(view: android.view.View, profile: Profile)
+        fun showHistory(view: android.view.View, historyEntryList: List<HistoryEntry>?)
+        fun updateHistory(historyEntryList: List<HistoryEntry>?)
         fun showAssistance(view: android.view.View, profile: Profile)
+
         fun showVotes(view: android.view.View, profile: Profile)
     }
 

@@ -1,46 +1,46 @@
 package org.redciudadana.monitorlegislativo.data.models
 
-import android.annotation.SuppressLint
 import android.os.Parcelable
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 
-@SuppressLint("ParcelCreator")
 @Parcelize
 data class Profile(
-    val id: String?,
-    val nombre: String?,
-    val institucion: String?,
-    val profesion: String?,
-    val educacion: String?,
-    val edad: String?,
-    val estadocivil: String?,
-    val anosprofesional: String?,
-    val colegiado: String?,
-    val ocupacion: String?,
-    val planTrabajo: String?,
-    val biografia: String?,
-    val experienciaProfesional: String?,
-    val experienciaAcademica: String?,
-    val proyeccion: String?,
-    val primerNombre: String?,
-    val apellidos: String?,
-    val partidopostulante: String?,
-    val partidoactual: String?,
-    val distrito: String?,
-    val nacimiento: String?,
-    val estado: String?,
-    val historialpolitico: String?,
-    val cargo: String?,
-    val sexo: String?,
-    val tw: String?,
-    val fb: String?,
-    val fotoUrlPartido: String?,
-    val fotoUrl: String?,
-    val Contacto: String?,
-    val direccion: String?,
-    val telefono: String?,
-    val ext: String?,
-    val email: String?
-) : Parcelable
+    val id: String? = null,
+    val nombre: String? = null,
+    val institucion: String? = null,
+    val profesion: String? = null,
+    val educacion: String? = null,
+    val edad: String? = null,
+    val estadocivil: String? = null,
+    val anosprofesional: String? = null,
+    val colegiado: String? = null,
+    val ocupacion: String? = null,
+    val planTrabajo: String? = null,
+    val biografia: String? = null,
+    val experienciaProfesional: String? = null,
+    val experienciaAcademica: String? = null,
+    val proyeccion: String? = null,
+    val primerNombre: String? = null,
+    val apellidos: String? = null,
+    val partidopostulante: String? = null,
+    val partidoactual: String? = null,
+    val distrito: String? = null,
+    val nacimiento: String? = null,
+    val estado: String? = null,
+    val historialpolitico: String? = null,
+    val informaciongeneral: String? = null,
+    val cargo: String? = null,
+    val sexo: String? = null,
+    val tw: String? = null,
+    val fb: String? = null,
+    val fotoUrlPartido: String? = null,
+    val fotoUrl: String? = null,
+    val Contacto: String? = null,
+    val direccion: String? = null,
+    val telefono: String? = null,
+    val ext: String? = null,
+    val email: String? = null
+) : Parcelable {
+
+}

@@ -168,7 +168,6 @@ class MainActivity : AppCompatActivity(), MainView {
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("Aceptar") { _, _ -> }
-            .setNegativeButton("Cancelar") { _, _ -> }
             .show()
 
     }

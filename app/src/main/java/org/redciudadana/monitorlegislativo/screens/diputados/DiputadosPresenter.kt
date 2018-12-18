@@ -2,6 +2,7 @@ package org.redciudadana.monitorlegislativo.screens.diputados
 
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.api.Api
+import org.redciudadana.monitorlegislativo.data.api.ModelStorage
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.utils.mvp.BasePresenter
 
@@ -11,7 +12,7 @@ class DiputadosPresenter: BasePresenter<DiputadosContract.View>(), DiputadosCont
         mView?.showLoading()
         var cachedProfiles: List<Profile>? = null
         mView?.getContext()?.let {
-            cachedProfiles = Api.getCachedProfiles(it)
+            cachedProfiles = ModelStorage.getProfileListFromStorage(it)
             Api.getProfiles(it) { profileList, throwable ->
                 if (throwable != null) {
                     val profiles = mView?.getContext()?.getString(R.string.error_profiles)

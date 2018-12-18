@@ -4,24 +4,66 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import eleccionmp.redciudadana.org.eleccionmp.utils.Storage
+import org.redciudadana.monitorlegislativo.data.models.Assistance
+import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 
 object ModelStorage {
     private const val diputadosKey = "diputados"
+    private const val historialKey = "historial"
+    private const val assistanceKey = "asistencia"
 
-    fun getProfileListFromStorage(context: Context): List<Profile>? {
-        val type = Types.newParameterizedType(List::class.java, Profile::class.java)
-        val adapter = Moshi.Builder().build().adapter<List<Profile>>(type)
-        val key = diputadosKey
+    private fun <T> getListFromStorage(context: Context, classType: Class<T>, key: String): List<T>? {
+        val type = Types.newParameterizedType(List::class.java, classType)
+        val adapter = Moshi.Builder().build().adapter<List<T>>(type)
         val stored = Storage.getStringPreference(context, key) ?: return null
         return adapter.fromJson(stored)
     }
 
-    fun saveProfileListToStorage(context: Context, profileList: List<Profile>) {
-        val type = Types.newParameterizedType(List::class.java, Profile::class.java)
-        val adapter = Moshi.Builder().build().adapter<List<Profile>>(type)
-        val key = diputadosKey
-        Storage.setStringPreference(context, key, adapter.toJson(profileList))
+    private fun <T> saveListToStorage(context: Context, key: String, list: List<T>, listType: Class<T>) {
+        val type = Types.newParameterizedType(List::class.java, listType)
+        val adapter = Moshi.Builder().build().adapter<List<T>>(type)
+        Storage.setStringPreference(context, key, adapter.toJson(list))
     }
+
+
+    fun getProfileListFromStorage(context: Context): List<Profile>?  = getListFromStorage(
+        context = context,
+        classType = Profile::class.java,
+        key = diputadosKey
+    )
+
+    fun saveProfileListToStorage(context: Context, profileList: List<Profile>) = saveListToStorage(
+        context = context,
+        key = diputadosKey,
+        list = profileList,
+        listType = Profile::class.java
+    )
+
+    fun getHistoryEntryList(context: Context): List<HistoryEntry>? = getListFromStorage(
+        context = context,
+        classType = HistoryEntry::class.java,
+        key = historialKey
+    )
+
+    fun saveHistoryEntryList(context: Context, historyEntryList: List<HistoryEntry>) = saveListToStorage(
+        context = context,
+        key = historialKey,
+        list = historyEntryList,
+        listType = HistoryEntry::class.java
+    )
+
+    fun getAssistanceList(context: Context): List<Assistance>? = getListFromStorage(
+        context = context,
+        classType = Assistance::class.java,
+        key = assistanceKey
+    )
+
+    fun saveAssistanceList(context: Context, assistanceList: List<Assistance>) = saveListToStorage(
+        context = context,
+        key = assistanceKey,
+        list = assistanceList,
+        listType = Assistance::class.java
+    )
 
 }

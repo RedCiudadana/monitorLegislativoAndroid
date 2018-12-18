@@ -9,6 +9,8 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexvasilkov.foldablelayout.UnfoldableView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.*
@@ -16,15 +18,19 @@ import kotlinx.android.synthetic.main.fragment_diputado.*
 import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
 import kotlinx.android.synthetic.main.fragment_diputado_history.*
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.main.MainView
 import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
 import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
 import org.redciudadana.monitorlegislativo.utils.mvp.BaseFragment
+import java.lang.ref.WeakReference
 
 class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Presenter, MainView>(), DiputadoContract.View {
 
     override var mPresenter: DiputadoContract.Presenter = DiputadoPresenter()
+
+    var mHistoryAdapter: WeakReference<DiputadoHistoryAdapter>? = null
 
     override fun setTitle() {
         mActivityView?.setTitle("Diputado")
@@ -102,18 +108,38 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
     override fun showGeneralInformation(view: View, profile: Profile) {
         inflateIntoDetails(R.layout.fragment_diputado_general_info, "Información general", R.drawable.icon_document_white)
-        val parsedText = fromHtml(profile.biografia)
+        val parsedText = fromHtml(profile.informaciongeneral)
         diputado_general_info_text.text = parsedText
         unfoldDetails(view)
     }
 
-    override fun showHistory(view: View, profile: Profile) {
+    override fun showHistory(view: View, historyEntryList: List<HistoryEntry>?) {
         inflateIntoDetails(R.layout.fragment_diputado_history, "Historial político", R.drawable.icon_history_white)
-        diputado_status.text = profile.estado ?: "N/A"
-        diputado_age.text = profile.edad ?: "N/A"
-        diputado_professional_years.text = profile.anosprofesional ?: "N/A"
-        diputado_college_number.text = profile.colegiado ?: "N/A"
+        context?.let {
+            val mLayoutManager = LinearLayoutManager(context)
+            val historyAdapter= DiputadoHistoryAdapter(this, historyEntryList)
+            mHistoryAdapter = WeakReference(historyAdapter)
+            history_recycler.setHasFixedSize(true)
+            history_recycler.layoutManager = mLayoutManager
+            history_recycler.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    mLayoutManager.orientation
+                )
+            )
+            history_recycler.adapter = historyAdapter
+
+        }
         unfoldDetails(view)
+    }
+
+    override fun updateHistory(historyEntryList: List<HistoryEntry>?) {
+        mHistoryAdapter?.get()?.let {
+            it.historyList = historyEntryList
+        }
+        if (historyEntryList == null) {
+            showError("No se pudo obtener la información")
+        }
     }
 
     override fun showAssistance(view: View, profile: Profile) {

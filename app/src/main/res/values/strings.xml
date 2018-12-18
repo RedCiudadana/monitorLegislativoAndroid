@@ -17,10 +17,8 @@
     <string name="diputados_image">Imagen de diputado</string>
 
     <!-- diputado -->
-    <string name="diputado_status">Estado: </string>
-    <string name="diputado_age">Edad: </string>
-    <string name="diputado_professional_years">Años de ejercicio profesional: </string>
-    <string name="diputado_college_number">No. de colegiado: </string>
+    <string name="diputado_history_year">Año</string>
+    <string name="diputado_history_entity">Entidad</string>
 
 </resources>
 

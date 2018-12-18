@@ -1,6 +1,8 @@
 package org.redciudadana.monitorlegislativo.data.api
 
 import android.content.Context
+import org.redciudadana.monitorlegislativo.data.models.Assistance
+import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,15 +48,27 @@ fun <T> apiCallGet(context: Context, getFromStorage: (Context) -> T?, setToStora
 
 object Api {
 
-    fun getCachedProfiles(context: Context): List<Profile>? {
-        return ModelStorage.getProfileListFromStorage(context)
-    }
-
     fun getProfiles(context: Context, callback: ((List<Profile>?, Throwable?) -> Unit)?) = apiCallGet(
         context = context,
         getFromStorage = ModelStorage::getProfileListFromStorage,
         setToStorage = ModelStorage::saveProfileListToStorage,
         apiCall = api::getProfiles,
+        callback = callback
+    )
+
+    fun getHistoryEntryList(context: Context, callback: ((List<HistoryEntry>?, Throwable?) -> Unit)?) = apiCallGet(
+        context = context,
+        getFromStorage = ModelStorage::getHistoryEntryList,
+        setToStorage = ModelStorage::saveHistoryEntryList,
+        apiCall = api::getHistory,
+        callback = callback
+    )
+
+    fun getAssistanceList(context: Context, callback: ((List<Assistance>?, Throwable?) -> Unit)?) = apiCallGet(
+        context = context,
+        getFromStorage = ModelStorage::getAssistanceList,
+        setToStorage = ModelStorage::saveAssistanceList,
+        apiCall = api::getAssistance,
         callback = callback
     )
 }
