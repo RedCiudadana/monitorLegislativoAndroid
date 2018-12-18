@@ -83,9 +83,8 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
     }
 
     private fun onBackPressed(): Boolean {
-        if (unfoldable_view.isUnfolded || unfoldable_view.isUnfolding) {
-            unfoldable_view.foldBack()
-            return true
+        view?.findViewById<UnfoldableView>(R.id.unfoldable_view)?.run {
+            return isUnfolded || isUnfolding
         }
         return false
     }
