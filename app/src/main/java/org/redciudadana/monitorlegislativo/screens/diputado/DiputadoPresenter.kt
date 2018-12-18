@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import org.redciudadana.monitorlegislativo.data.api.Api
 import org.redciudadana.monitorlegislativo.data.api.ModelStorage
+import org.redciudadana.monitorlegislativo.data.models.Assistance
 import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.main.MainView
@@ -39,7 +40,7 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         when (position) {
             0 -> mView?.showGeneralInformation(view, profile)
             1 -> prepareHistoryAndShow(view)
-            2 -> mView?.showAssistance(view, profile)
+            2 -> prepareAssistance(view)
             3 -> mView?.showVotes(view, profile)
         }
     }
@@ -85,10 +86,32 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         }
     }
 
+    fun prepareAssistance(view: View) {
+        mView?.showLoading()
+        mView?.getContext()?.let {
+            val cachedAssistance = ModelStorage.getAssistanceList(it)
+            mView?.showAssistance(view, filterAssistance(cachedAssistance, profile))
+            Api.getAssistanceList(it) { response, error ->
+                mView?.hideLoading()
+                if (error != null) {
+                    mView?.showError("No se pudo cargar la información")
+                } else {
+                    mView?.updateAssistance(filterAssistance(response, profile))
+                }
+            }
+        }
+    }
+
     fun filterHistory(list: List<HistoryEntry>?, profile: Profile?): List<HistoryEntry>? {
         return list
             ?.sortedBy { it.ano?.toInt() }
             ?.filter { it.perfil == profile?.id }
+    }
+
+    fun filterAssistance(assistance: List<Assistance>?, profile: Profile?): Assistance? {
+        return assistance
+            ?.filter { it.perfilId == profile?.id }
+            ?.firstOrNull()
     }
 
 }

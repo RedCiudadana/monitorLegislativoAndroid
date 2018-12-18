@@ -9,15 +9,23 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexvasilkov.foldablelayout.UnfoldableView
 import com.bumptech.glide.Glide
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_diputado.*
+import kotlinx.android.synthetic.main.fragment_diputado_assistance.*
 import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
 import kotlinx.android.synthetic.main.fragment_diputado_history.*
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.data.models.Assistance
 import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.main.MainView
@@ -142,8 +150,38 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         }
     }
 
-    override fun showAssistance(view: View, profile: Profile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun createData(percentageString: String?): PieData {
+        val percentage = percentageString?.replace("%", "")?.toFloatOrNull() ?: 0f
+        val missing = 100f - percentage
+        val entries = listOf(
+            PieEntry(percentage, "Asistencia"),
+            PieEntry(missing, "Ausencia")
+        )
+        val dataSet = PieDataSet(entries, "")
+        dataSet.setColors(intArrayOf(R.color.chart_assistance, R.color.chart_missing), context)
+        dataSet.setValueFormatter { value, _, _, _-> "$value%" }
+        return PieData(dataSet)
+    }
+
+    override fun showAssistance(view: View, assistance: Assistance?) {
+        inflateIntoDetails(R.layout.fragment_diputado_assistance, "Asistencia", R.drawable.icon_people_white)
+        val data = createData(assistance?.porcentaje)
+        val description = Description()
+        description.text = ""
+        diputado_assistance_chart.description= description
+        diputado_assistance_chart.setEntryLabelColor(ContextCompat.getColor(context!!, R.color.chart_label))
+        diputado_assistance_chart.data = data
+        diputado_assistance_chart.invalidate()
+        unfoldDetails(view)
+    }
+
+    override fun updateAssistance(assistance: Assistance?) {
+        view?.findViewById<PieChart>(R.id.diputado_assistance_chart)?.let {
+            val data = createData(assistance?.porcentaje)
+            it.data = data
+            it.invalidate()
+        }
+
     }
 
     override fun showVotes(view: View, profile: Profile) {

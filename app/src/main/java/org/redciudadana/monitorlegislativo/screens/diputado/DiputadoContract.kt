@@ -1,5 +1,6 @@
 package org.redciudadana.monitorlegislativo.screens.diputado
 
+import org.redciudadana.monitorlegislativo.data.models.Assistance
 import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.utils.mvp.IPresenter
@@ -14,8 +15,8 @@ object DiputadoContract {
         fun showGeneralInformation(view: android.view.View, profile: Profile)
         fun showHistory(view: android.view.View, historyEntryList: List<HistoryEntry>?)
         fun updateHistory(historyEntryList: List<HistoryEntry>?)
-        fun showAssistance(view: android.view.View, profile: Profile)
-
+        fun showAssistance(view: android.view.View, assistance: Assistance?)
+        fun updateAssistance(assistance: Assistance?)
         fun showVotes(view: android.view.View, profile: Profile)
     }
 
