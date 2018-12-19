@@ -58,21 +58,10 @@ class MainActivity : AppCompatActivity(), MainView {
     private fun setDrawerNavigationListener() {
         drawer_navigation.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.drawer_candidatos-> {
-                    showDiputados()
-                }
-//                R.id.option_commission -> {
-//                    showCommission()
-//                }
-//                R.id.option_news -> {
-//                    showNews()
-//                }
-//                R.id.option_election_process -> {
-//                    showElectionProcess()
-//                }
-//                R.id.option_contact -> {
-//                    showContact()
-//                }
+                R.id.drawer_profiles-> showDiputados()
+                R.id.drawer_representant -> showRepresentant()
+                R.id.drawer_congress_data -> showCongressData()
+                R.id.drawer_news -> showNews()
                 else -> {
                     return@setNavigationItemSelectedListener false
                 }

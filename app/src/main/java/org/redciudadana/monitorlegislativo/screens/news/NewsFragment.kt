@@ -15,7 +15,6 @@ class NewsFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_news, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val timeline = SearchTimeline.Builder()
