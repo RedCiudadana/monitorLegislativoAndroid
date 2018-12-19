@@ -1,13 +1,12 @@
 package org.redciudadana.monitorlegislativo.screens.diputado
 
-import android.os.Handler
-import android.util.Log
 import android.view.View
 import org.redciudadana.monitorlegislativo.data.api.Api
 import org.redciudadana.monitorlegislativo.data.api.ModelStorage
 import org.redciudadana.monitorlegislativo.data.models.Assistance
 import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
+import org.redciudadana.monitorlegislativo.data.models.Voting
 import org.redciudadana.monitorlegislativo.screens.main.MainView
 import org.redciudadana.monitorlegislativo.utils.mvp.BasePresenter
 import org.redciudadana.monitorlegislativo.utils.openUrl
@@ -41,7 +40,7 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
             0 -> mView?.showGeneralInformation(view, profile)
             1 -> prepareHistoryAndShow(view)
             2 -> prepareAssistance(view)
-            3 -> mView?.showVotes(view, profile)
+            3 -> prepareVoting(view)
         }
     }
 
@@ -102,6 +101,22 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         }
     }
 
+    fun prepareVoting(view: View) {
+        mView?.showLoading()
+        mView?.getContext()?.let {
+            val cachedVoting = filterVoting(ModelStorage.getVotingList(it), profile)
+            mView?.showVoting(view, cachedVoting)
+            Api.getVotingList(it) { response, error ->
+                mView?.hideLoading()
+                if (error != null) {
+                    mView?.showError("No se pudo cargar la información")
+                } else {
+                    mView?.updateVoting(filterVoting(response, profile))
+                }
+            }
+        }
+    }
+
     fun filterHistory(list: List<HistoryEntry>?, profile: Profile?): List<HistoryEntry>? {
         return list
             ?.sortedBy { it.ano?.toInt() }
@@ -112,6 +127,15 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
         return assistance
             ?.filter { it.perfilId == profile?.id }
             ?.firstOrNull()
+    }
+
+    fun filterVoting(votingList: List<Map<String, String>>?, profile: Profile?): List<Voting>? {
+        return votingList
+            ?.filter { it.get("perfilId") == profile?.id }
+            ?.firstOrNull()
+            ?.toList()
+            ?.filter { it.first != "perfilId" }
+            ?.map { Voting(it.first, it.second) }
     }
 
 }

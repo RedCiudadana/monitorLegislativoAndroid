@@ -8,7 +8,7 @@
     <color name="drawer_menu_text">#FFFFFF</color>
 
     <!-- diputados -->
-    <color name="diputados_background">#ffffff</color>
+    <color name="diputados_background">#eee</color>
     <color name="diputados_text_color">#000</color>
     <color name="diputados_text_color_white">#fff</color>
 

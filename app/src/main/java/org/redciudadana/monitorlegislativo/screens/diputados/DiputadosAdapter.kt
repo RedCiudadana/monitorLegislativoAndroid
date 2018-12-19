@@ -1,16 +1,17 @@
 package org.redciudadana.monitorlegislativo.screens.diputados
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_diputados_item.view.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
+import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
+import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
 
 class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val candidateImage: ImageView
@@ -35,7 +36,7 @@ class DiputadosAdapter(
 
     var diputados: List<Profile>? = diputados
         set(value) {
-            field = value
+            field = value?.sortedBy { it.nombre }
             notifyDataSetChanged()
         }
 
@@ -52,7 +53,11 @@ class DiputadosAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val candidate = diputados?.get(position)
         if (candidate != null) {
-            Glide.with(context).load(candidate.fotoUrl).into(holder.candidateImage)
+            GlideApp
+                .with(context)
+                .load(candidate.fotoUrl)
+                .transform(RoundCornerTransformation(context.resources))
+                .into(holder.candidateImage)
             holder.candidateText.text = candidate.nombre
             holder.candidatePartido.text = candidate.partidoactual
             holder.onClickListener = View.OnClickListener {

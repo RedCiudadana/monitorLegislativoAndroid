@@ -16,4 +16,7 @@ interface IApi {
 
     @GET("asistencia.json")
     fun getAssistance(): Call<List<Assistance>>
+
+    @GET("votaciones.json")
+    fun getVoting(): Call<List<Map<String, String>>>
 }

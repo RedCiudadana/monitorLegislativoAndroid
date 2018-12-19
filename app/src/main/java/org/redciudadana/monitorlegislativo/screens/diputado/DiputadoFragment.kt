@@ -3,7 +3,6 @@ package org.redciudadana.monitorlegislativo.screens.diputado
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -13,7 +12,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexvasilkov.foldablelayout.UnfoldableView
-import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.PieData
@@ -24,10 +22,12 @@ import kotlinx.android.synthetic.main.fragment_diputado.*
 import kotlinx.android.synthetic.main.fragment_diputado_assistance.*
 import kotlinx.android.synthetic.main.fragment_diputado_general_info.*
 import kotlinx.android.synthetic.main.fragment_diputado_history.*
+import kotlinx.android.synthetic.main.fragment_diputado_voting.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Assistance
 import org.redciudadana.monitorlegislativo.data.models.HistoryEntry
 import org.redciudadana.monitorlegislativo.data.models.Profile
+import org.redciudadana.monitorlegislativo.data.models.Voting
 import org.redciudadana.monitorlegislativo.screens.main.MainView
 import org.redciudadana.monitorlegislativo.utils.glide.GlideApp
 import org.redciudadana.monitorlegislativo.utils.glide.RoundCornerTransformation
@@ -39,6 +39,7 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
     override var mPresenter: DiputadoContract.Presenter = DiputadoPresenter()
 
     var mHistoryAdapter: WeakReference<DiputadoHistoryAdapter>? = null
+    var mVotingAdapter: WeakReference<DiputadoVotingAdapter>? = null
 
     override fun setTitle() {
         mActivityView?.setTitle("Diputado")
@@ -84,7 +85,10 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
     private fun onBackPressed(): Boolean {
         view?.findViewById<UnfoldableView>(R.id.unfoldable_view)?.run {
-            return isUnfolded || isUnfolding
+            if (isUnfolded || isUnfolding) {
+                foldBack()
+                return true
+            }
         }
         return false
     }
@@ -183,8 +187,27 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
 
     }
 
-    override fun showVotes(view: View, profile: Profile) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showVoting(view: View, voting: List<Voting>?) {
+        inflateIntoDetails(R.layout.fragment_diputado_voting, "Votación", R.drawable.icon_check_white)
+        context?.let {
+            val mLayoutManager = LinearLayoutManager(context)
+            val votingAdapter= DiputadoVotingAdapter(this, voting)
+            mVotingAdapter= WeakReference(votingAdapter)
+            voting_recycler.setHasFixedSize(true)
+            voting_recycler.layoutManager = mLayoutManager
+            voting_recycler.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    mLayoutManager.orientation
+                )
+            )
+            voting_recycler.adapter = votingAdapter
+        }
+        unfoldDetails(view)
+    }
+
+    override fun updateVoting(voting: List<Voting>?) {
+
     }
 
     private fun inflateIntoDetails(layout: Int, title: String, icon: Int) {

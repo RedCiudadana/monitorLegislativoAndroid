@@ -71,4 +71,12 @@ object Api {
         apiCall = api::getAssistance,
         callback = callback
     )
+
+    fun getVotingList(context: Context, callback: ((List<Map<String, String>>?, Throwable?) -> Unit)?) = apiCallGet(
+        context = context,
+        getFromStorage = ModelStorage::getVotingList,
+        setToStorage = ModelStorage::saveVotingList,
+        apiCall = api::getVoting,
+        callback = callback
+    )
 }

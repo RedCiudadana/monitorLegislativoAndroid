@@ -12,10 +12,20 @@ object ModelStorage {
     private const val diputadosKey = "diputados"
     private const val historialKey = "historial"
     private const val assistanceKey = "asistencia"
+    private const val votingKey = "votaciones"
 
     private fun <T> getListFromStorage(context: Context, classType: Class<T>, key: String): List<T>? {
         val type = Types.newParameterizedType(List::class.java, classType)
         val adapter = Moshi.Builder().build().adapter<List<T>>(type)
+        val stored = Storage.getStringPreference(context, key) ?: return null
+        return adapter.fromJson(stored)
+
+    }
+
+    private fun getMapListFromStorage(context: Context, key: String): List<Map<String, String>>? {
+        val classType = Types.newParameterizedType(Map::class.java, String::class.java, String::class.java)
+        val type = Types.newParameterizedType(List::class.java, classType)
+        val adapter = Moshi.Builder().build().adapter<List<Map<String, String>>>(type)
         val stored = Storage.getStringPreference(context, key) ?: return null
         return adapter.fromJson(stored)
     }
@@ -23,6 +33,13 @@ object ModelStorage {
     private fun <T> saveListToStorage(context: Context, key: String, list: List<T>, listType: Class<T>) {
         val type = Types.newParameterizedType(List::class.java, listType)
         val adapter = Moshi.Builder().build().adapter<List<T>>(type)
+        Storage.setStringPreference(context, key, adapter.toJson(list))
+    }
+
+    private fun saveMapListToStorage(context: Context, key: String, list: List<Map<String, String>>) {
+        val listType = Types.newParameterizedType(Map::class.java, String::class.java, String::class.java)
+        val type = Types.newParameterizedType(List::class.java, listType)
+        val adapter = Moshi.Builder().build().adapter<List<Map<String, String>>>(type)
         Storage.setStringPreference(context, key, adapter.toJson(list))
     }
 
@@ -66,4 +83,15 @@ object ModelStorage {
         listType = Assistance::class.java
     )
 
+    fun getVotingList(context: Context): List<Map<String, String>>? = getMapListFromStorage(
+        context = context,
+        key = votingKey
+    )
+
+
+    fun saveVotingList(context: Context, votingList: List<Map<String, String>>) = saveMapListToStorage(
+        context = context,
+        key = votingKey,
+        list = votingList
+    )
 }
