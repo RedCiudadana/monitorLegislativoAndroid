@@ -142,11 +142,11 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showCongressData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showError("Próximamente", "")
     }
 
     override fun showRepresentant() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showError("Próximamente", "")
     }
 
     override fun showNews() {

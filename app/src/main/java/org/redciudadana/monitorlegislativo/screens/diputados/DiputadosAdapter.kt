@@ -34,9 +34,9 @@ class DiputadosAdapter(
     private val candidateView: DiputadosContract.View,
     diputados: List<Profile>?) : RecyclerView.Adapter<ViewHolder>() {
 
-    var diputados: List<Profile>? = diputados
+    var diputados: List<Profile>? = sortProfiles(diputados)
         set(value) {
-            field = value?.sortedBy { it.nombre }
+            field = sortProfiles(value)
             notifyDataSetChanged()
         }
 
@@ -66,5 +66,6 @@ class DiputadosAdapter(
         }
     }
 
+    private fun sortProfiles(profiles: List<Profile>?): List<Profile>? = profiles?.sortedBy { it.nombre }
 
 }

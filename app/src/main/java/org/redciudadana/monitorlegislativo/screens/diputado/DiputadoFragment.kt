@@ -60,21 +60,30 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
         details_layout.visibility = INVISIBLE
         unfoldable_view.setOnFoldingListener(object : UnfoldableView.SimpleFoldingListener() {
             override fun onUnfolding(unfoldableView: UnfoldableView?) {
-                touch_interceptor.isClickable = true
-                details_layout.visibility = VISIBLE
+                view?.findViewById<View>(R.id.touch_interceptor)?.let {
+                    it.isClickable = true
+                    details_layout.visibility = VISIBLE
+                }
+
             }
 
             override fun onUnfolded(unfoldableView: UnfoldableView?) {
-                touch_interceptor.isClickable = false
+                view?.findViewById<View>(R.id.touch_interceptor)?.run {
+                    isClickable = false
+                }
             }
 
             override fun onFoldingBack(unfoldableView: UnfoldableView?) {
-                touch_interceptor.isClickable = true
+                view?.findViewById<View>(R.id.touch_interceptor)?.run {
+                    isClickable = true
+                }
             }
 
             override fun onFoldedBack(unfoldableView: UnfoldableView?) {
-                touch_interceptor.isClickable = false
-                details_layout.visibility = INVISIBLE
+                view?.findViewById<View>(R.id.touch_interceptor)?.let {
+                    it.isClickable = false
+                    details_layout.visibility = INVISIBLE
+                }
             }
         })
         mActivityView?.setOnBackListener(this::onBackPressed)
