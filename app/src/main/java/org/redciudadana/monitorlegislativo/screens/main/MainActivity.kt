@@ -17,6 +17,7 @@ import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.diputado.DiputadoFragment
 import org.redciudadana.monitorlegislativo.screens.diputados.DiputadosFragment
 import org.redciudadana.monitorlegislativo.screens.menu.MenuFragment
+import org.redciudadana.monitorlegislativo.screens.news.NewsFragment
 import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -160,7 +161,8 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showNews() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val fragment = NewsFragment()
+        changeFragment(fragment, true)
     }
 
     override fun showError(title: String, message: String) {
