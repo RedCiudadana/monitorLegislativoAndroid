@@ -6,6 +6,7 @@ import org.redciudadana.monitorlegislativo.utils.views.ActivityView
 interface MainView : ActivityView {
     fun showMainMenu()
     fun showDiputados()
+    fun showDiputados(district: String)
     fun showDiputado(profile: Profile)
     fun showRepresentant()
     fun showCongressData()

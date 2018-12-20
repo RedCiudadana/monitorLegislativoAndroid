@@ -15,9 +15,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.redciudadana.monitorlegislativo.R
 import org.redciudadana.monitorlegislativo.data.models.Profile
 import org.redciudadana.monitorlegislativo.screens.diputado.DiputadoFragment
+import org.redciudadana.monitorlegislativo.screens.diputados.DiputadosContract
 import org.redciudadana.monitorlegislativo.screens.diputados.DiputadosFragment
 import org.redciudadana.monitorlegislativo.screens.menu.MenuFragment
 import org.redciudadana.monitorlegislativo.screens.news.NewsFragment
+import org.redciudadana.monitorlegislativo.screens.representant.RepresentantFragment
 import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity(), MainView {
@@ -133,6 +135,14 @@ class MainActivity : AppCompatActivity(), MainView {
         changeFragment(fragment, true)
     }
 
+    override fun showDiputados(district: String) {
+        val fragment = DiputadosFragment()
+        val args = Bundle()
+        args.putString(DiputadosContract.DISTRICT_ARG, district)
+        fragment.arguments = args
+        changeFragment(fragment, true)
+    }
+
     override fun showDiputado(profile: Profile) {
         val fragment = DiputadoFragment()
         val arguments = Bundle()
@@ -146,7 +156,8 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showRepresentant() {
-        showError("Próximamente", "")
+        val fragment = RepresentantFragment()
+        changeFragment(fragment, true)
     }
 
     override fun showNews() {

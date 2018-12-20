@@ -6,6 +6,8 @@ import org.redciudadana.monitorlegislativo.utils.mvp.IView
 
 object DiputadosContract {
 
+    const val DISTRICT_ARG = "district"
+
     interface View: IView {
         fun initCandidatesList(list: List<Profile>?)
         fun showCandidatesList(list: List<Profile>)

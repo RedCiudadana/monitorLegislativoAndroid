@@ -10,6 +10,7 @@ import org.redciudadana.monitorlegislativo.data.models.Voting
 import org.redciudadana.monitorlegislativo.screens.main.MainView
 import org.redciudadana.monitorlegislativo.utils.mvp.BasePresenter
 import org.redciudadana.monitorlegislativo.utils.openUrl
+import java.net.URL
 
 
 val numberRegex = Regex("""(\d+)""")
@@ -45,10 +46,15 @@ class DiputadoPresenter: BasePresenter<DiputadoContract.View>(), DiputadoContrac
     }
 
     private fun openUrlOnClick(string: String?) {
-        if (string == null) {
+        if (string == null || string.isEmpty()) {
             mView?.showError("Información no disponible")
+        } else {
+            try {
+                openUrl(mView?.getContext(), string)
+            } catch (error: Error) {
+                mView?.showError("Información no disponible")
+            }
         }
-        openUrl(mView?.getContext(), string)
     }
 
     private fun buildTwitterUrl(twitterAccount: String?): String? {

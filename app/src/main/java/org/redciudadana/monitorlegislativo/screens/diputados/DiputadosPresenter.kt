@@ -8,6 +8,7 @@ import org.redciudadana.monitorlegislativo.utils.mvp.BasePresenter
 
 class DiputadosPresenter: BasePresenter<DiputadosContract.View>(), DiputadosContract.Presenter {
     override fun onViewCreated() {
+        val district = mView?.getArguments()?.get(DiputadosContract.DISTRICT_ARG) as? String
         mView?.setTitle()
         mView?.showLoading()
         var cachedProfiles: List<Profile>? = null
@@ -20,13 +21,18 @@ class DiputadosPresenter: BasePresenter<DiputadosContract.View>(), DiputadosCont
                         mView?.showError(profiles)
                     }
                 } else if (profileList != null){
-                    mView?.showCandidatesList(profileList)
+                    mView?.showCandidatesList(filterProfiles(district, profileList) as List<Profile>)
                 }
                 mView?.hideLoading()
             }
         }
-        mView?.initCandidatesList(cachedProfiles)
+        mView?.initCandidatesList(filterProfiles(district, cachedProfiles))
 
+    }
+
+    fun filterProfiles(district: String?, profiles: List<Profile>?): List<Profile>? {
+        if (district == null) return profiles
+        return profiles?.filter { it.distrito == district }
     }
 
 }
