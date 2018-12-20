@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1008678580528",
+    "firebase_url": "https://monitor-legislativo-211f3.firebaseio.com",
+    "project_id": "monitor-legislativo-211f3",
+    "storage_bucket": "monitor-legislativo-211f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008678580528:android:2209fd58ed51ecca",
+        "android_client_info": {
+          "package_name": "org.redciudadana.monitorlegislativo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008678580528-meckvcmtsd9as7tu8trg8ejmi1g1q0it.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.redciudadana.monitorlegislativo",
+            "certificate_hash": "badb61522e30452e41be0e4348bdfd24965a6108"
+          }
+        },
+        {
+          "client_id": "1008678580528-7dv7d8d85jmk8ss7499tnshm8a382tge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAffzRpzWKWwXODRd_ugHFP31m_xLtW-Ro"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008678580528-7dv7d8d85jmk8ss7499tnshm8a382tge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
