@@ -216,7 +216,7 @@ class DiputadoFragment: BaseFragment<DiputadoContract.View, DiputadoContract.Pre
     }
 
     override fun updateVoting(voting: List<Voting>?) {
-
+        mVotingAdapter?.get()?.votingList = voting
     }
 
     private fun inflateIntoDetails(layout: Int, title: String, icon: Int) {
