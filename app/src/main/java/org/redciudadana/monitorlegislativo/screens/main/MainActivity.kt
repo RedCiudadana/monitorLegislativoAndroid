@@ -152,7 +152,6 @@ class MainActivity : AppCompatActivity(), MainView {
     }
 
     override fun showCongressData() {
-        TODO("falta")
         showError("Próximamente", "")
     }
 
