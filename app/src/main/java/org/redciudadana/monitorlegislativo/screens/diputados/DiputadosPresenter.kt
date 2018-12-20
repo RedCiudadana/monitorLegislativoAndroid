@@ -9,7 +9,6 @@ import org.redciudadana.monitorlegislativo.utils.mvp.BasePresenter
 class DiputadosPresenter: BasePresenter<DiputadosContract.View>(), DiputadosContract.Presenter {
     override fun onViewCreated() {
         val district = mView?.getArguments()?.get(DiputadosContract.DISTRICT_ARG) as? String
-        mView?.setTitle()
         mView?.showLoading()
         var cachedProfiles: List<Profile>? = null
         mView?.getContext()?.let {

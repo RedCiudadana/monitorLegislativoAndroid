@@ -9,8 +9,13 @@ import com.twitter.sdk.android.tweetui.SearchTimeline
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter
 import kotlinx.android.synthetic.main.fragment_news.*
 import org.redciudadana.monitorlegislativo.R
+import org.redciudadana.monitorlegislativo.screens.main.MainActivity
 
 class NewsFragment: Fragment() {
+
+    val mainActivity: MainActivity
+        get() = activity as MainActivity
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_news, container, false)
     }
@@ -26,5 +31,8 @@ class NewsFragment: Fragment() {
             .setTimeline(timeline)
             .build()
         news_list.adapter = adapter
+
+        mainActivity.setTitle("Noticias")
     }
+
 }

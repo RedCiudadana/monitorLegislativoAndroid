@@ -36,7 +36,12 @@ class DiputadosFragment: BaseFragment<DiputadosContract.View, DiputadosContract.
     }
 
     override fun setTitle() {
-        mActivityView?.setTitle(getString(R.string.title_diputados))
+        val district = arguments?.getString(DiputadosContract.DISTRICT_ARG)
+        if (district != null) {
+            mActivityView?.setTitle(district)
+        } else {
+            mActivityView?.setTitle(getString(R.string.title_diputados))
+        }
     }
 
     override fun showCandidatesList(list: List<Profile>) {
