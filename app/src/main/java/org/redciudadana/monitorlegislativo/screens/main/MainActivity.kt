@@ -1,6 +1,8 @@
 package org.redciudadana.monitorlegislativo.screens.main
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.MenuItem
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity(), MainView {
                 R.id.drawer_representant -> showRepresentant()
                 R.id.drawer_congress_data -> showCongressData()
                 R.id.drawer_news -> showNews()
+                R.id.drawer_privacy_policy -> showPrivacyPolicy()
                 else -> {
                     return@setNavigationItemSelectedListener false
                 }
@@ -163,6 +166,11 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun showNews() {
         val fragment = NewsFragment()
         changeFragment(fragment, true)
+    }
+
+    override fun showPrivacyPolicy() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://redciudadana.org/privacy-policy-monitor-legislativo"))
+        startActivity(intent)
     }
 
     override fun showError(title: String, message: String) {

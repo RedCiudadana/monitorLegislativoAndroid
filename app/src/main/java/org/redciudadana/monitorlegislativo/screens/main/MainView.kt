@@ -11,6 +11,7 @@ interface MainView : ActivityView {
     fun showRepresentant()
     fun showCongressData()
     fun showNews()
+    fun showPrivacyPolicy()
     fun setOnBackListener(listener: () -> Boolean)
 
     companion object {

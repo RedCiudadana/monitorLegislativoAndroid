@@ -18,4 +18,6 @@
         android:id="@+id/drawer_news"
         android:title="Últimas noticias"
         android:icon="@drawable/drawer_twitter"/>
+    <item android:id="@+id/drawer_privacy_policy"
+        android:title="Política de privacidad"  />
 </menu>
